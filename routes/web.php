@@ -34,6 +34,7 @@ Route::any('task/getform',function (){
     return request()->method();
 });
 Route::get('user/{id}/{uid}',[\App\Http\Controllers\UserController::class,'index']);
+Route::get('user_form',[\App\Http\Controllers\UserController::class,'userForm']);
 
 Route::get('data/index',[\App\Http\Controllers\DataController::class,'index']);
 Route::get('data/find',[\App\Http\Controllers\DataController::class,'find']);
