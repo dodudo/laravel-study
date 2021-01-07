@@ -33,6 +33,7 @@ Route::get('task/form',[\App\Http\Controllers\TaskController::class,'form']);
 Route::any('task/getform',function (){
     return request()->method();
 });
+Route::get('user',[\App\Http\Controllers\UserController::class,'index']);
 
 Route::get('data/index',[\App\Http\Controllers\DataController::class,'index']);
 Route::get('data/find',[\App\Http\Controllers\DataController::class,'find']);

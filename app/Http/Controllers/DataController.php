@@ -10,6 +10,7 @@ use App\Scope\StatusScope;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\Debugbar\Facade as DebugBar;
 
 class DataController extends Controller
 {
@@ -259,7 +260,7 @@ class DataController extends Controller
 //        ]);
 //        return $collection->where('name','Mr.Lee');
         //数据集合
-        $users = User::get();
+//        $users = User::get();
 //        return $users->map(function ($user){
 //             $user->email = strtoupper($user->email);
 //            return $user;
@@ -298,7 +299,115 @@ class DataController extends Controller
 //        return Role::find(1)->user;
 //        $你好 = collect([1,2,3,4]);
 //        return $你好;
+        //关联查询
+//        $books = User::find(19)->book()->get();
+        //orwhere
+//        $books = User::find(19)->book()->where('id',1)->orWhere('id',11)->get();
+//        $books = User::find(19)->book()->where(function ($query){
+//            return $query->where('id',1)->orWhere('id',11);
+//        })->get();
+        //has
+//        $users = User::find(19)->has('book')->get();
+//        $users = User::has('book','>',2)->get();
+        //whereHas
+//        $users = User::whereHas('book',function ($query){
+//            return $query->where('user_id',19);
+//        })->get();
+//        return $users;
+        //doesntHave
+//        $users = User::doesntHave('book')->get();
+        //关联统计withCount,查询每个用户下面有多少书
+//        $users = User::withCount('book')->get();
+        //添加多个关联统计
+//        $users = User::withCount(['book','profile'])->get();
+        //闭包限制统计条件,book数量只统计id为19的
+//        $users = User::withCount(['book'=>function($query){
+//            $query->where('user_id',19);
+//        },'profile'])->get();
+//        return $users;
+//        $users = User::get();
+//        foreach ($users as $user){
+//            echo  $user->username;
+//        }
+//        DebugBar::info($users->toArray());
+        //获取所有书籍
+//        $books = Book::all();
+//        foreach ($books as $book){
+//            DebugBar::info($book->user->username);
+//        }
+//        DebugBar::info($books->toArray());
+        //预载入
+//        $books = Book::with('user:id,username')->get();
+        //闭包
+//        $books = Book::with(['user'=>function($query){
+//            return $query->where('id',19);
+//        }])->get();
+//        foreach ($books as $book){
+//            DebugBar::info($book->user);
+//        }
+        //延迟预载如
+//        $books = Book::all();
+//        if (true){
+//            $books = $books->load('user');
+//            foreach ($books as $book){
+//            DebugBar::info($book->user);
+//        }
+//        }
+        //延迟关联统计
+//        $users = User::all();
+//        if (true){
+//            DebugBar::info($users->loadCount('book'));
+//        }
+        //关联写入
+//        $user = User::find(100);
 
+//        $user->book()->save(new Book(['title'=>'哈利波特']));
+        //批量赋值
+//        $user->book()->saveMany([
+//            new Book(['title'=>'蜡笔小新']),
+//            new Book(['title'=>'仙剑奇侠传'])
+//        ]);
+        //create
+//        $user->book()->create([
+//            'title'=>'蜡笔小新'
+//        ]);
+        //删除
+//        $user->book()->delete();
+        //修改
+//        $user->book()->update(['title'=>'修改书籍']);
+        //使用associate来改变书籍关联的用户，修改userid
+//        $user = User::find(20);
+//        $book = Book::find(11);
+//        $book->user()->associate($user);
+//        $book->save();
+        //将某本书与用户取消关联
+//        $book = Book::find(11);
+//        $book->user()->disassociate();
+//        $book->save();
+        //在搜索书籍的对应用户的时候， 空 null 字段会导致用户出现 null 数据；
+        //withDefault
+//        $books = Book::with('user')->get();
+//        foreach ($books as $book){
+//            $user = $book->user;
+//            DebugBar::info($user->username);
+//        }
+        //多对多
+        //关联写入
+        $user = User::find(100);
+        $roleId = 1;
+//        $user->role()->attach($roleId,['details' => '哈哈哈哈']);
+        //移除关联
+//        $user->role()->detach($roleId);
+        //批量操作
+//        $user->role()->attach([1 => ['details'=>'hh'],2=> ['details'=>''],3=> ['details'=>'']]);
+//        $user->role()->detach([1,2,3]);
+        //sync可以新增角色权限， 且可以判断已存在而不再新增
+//        $user->role()->sync([1,2,3]);
+//        使用 udpateExistingPivot()可更新指定 roleId 的额外字段；
+        $user->role()->updateExistingPivot($roleId,['details' => 'aaa']);
+
+
+        return view('data');
     }
 
     public function find()

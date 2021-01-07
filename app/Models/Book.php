@@ -23,7 +23,15 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
+    protected $guarded=[
+
+    ];
+    public $timestamps = false;
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)
+            ->withDefault([
+                'id' => 0,
+                'username' => '游客用户'
+            ]);
     }
 }
