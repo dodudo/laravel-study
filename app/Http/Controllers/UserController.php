@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Barryvdh\Debugbar\Facade as DebugBar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -61,6 +62,22 @@ class UserController extends Controller
         //生成一个签名 URL， 在 URL 后面追加一个哈希签名字符串， 用于验证；
 //        return url()->signedRoute('user.id',["id"=>12]);
 //        return $request->hasValidSignature();
+        //cookie
+        //获取cookie，laravel中的cookie是加密的，
+//        return $request->cookie('laravel_session');
+//        return Cookie::get('laravel_session');
+        //创建cookie
+        //response方法
+//        return response('hello cookie')->cookie('name','mr.du',10);
+        //queue方法
+//        Cookie::queue('age',88,10);
+        //先使用cookie助手函数创建cookie实例，然后再写入，这样更灵活
+        //完整版，后面四种：路径，域名，https，仅 http
+//        cookie($name, $value, $minutes, $path, $domain, $secure, $httpOnly)
+//        $cookie = \cookie('gender', '男', 10);
+//        Cookie::queue($cookie);
+//        return response('dsa')->cookie('name');
+        return Cookie::get('gender');
     }
     public function userForm(){
         return view('user_form');
