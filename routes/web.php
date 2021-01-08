@@ -39,6 +39,9 @@ Route::get('user_form',[\App\Http\Controllers\UserController::class,'userForm'])
 Route::get('data/index',[\App\Http\Controllers\DataController::class,'index']);
 Route::get('data/find',[\App\Http\Controllers\DataController::class,'find']);
 
+Route::get('/admin',[\App\Http\Controllers\LoginController::class,'index'])->middleware('check');
+Route::get('/login',[\App\Http\Controllers\LoginController::class,'login']);
+
 Route::resource('blogs',\App\Http\Controllers\BlogController::class);
 Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class)->shallow();
 
